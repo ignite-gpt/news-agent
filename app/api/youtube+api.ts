@@ -1,14 +1,12 @@
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
 
 export async function GET(request: Request) {
-  // Launch the browser and open a new blank page
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({
+    channel: 'chrome',
+    headless: true,
+  })
   const page = await browser.newPage()
-
-  // Navigate the page to a URL
   await page.goto('https://developer.chrome.com/')
-
-  // Set screen size
   await page.setViewport({ height: 1024, width: 1080 })
 
   // Type into search box
@@ -23,8 +21,13 @@ export async function GET(request: Request) {
   const textSelector = await page.waitForSelector('text/Customize and automate')
   const fullTitle = await textSelector?.evaluate((el) => el.textContent)
 
-  // await browser.close()
-  browser.close()
+  // Close the browser
+  await browser.close()
 
-  return Response.json({ title: `The title of this blog post is ${fullTitle}` })
+  return new Response(
+    JSON.stringify({ title: `The title of this blog post is ${fullTitle}` }),
+    {
+      headers: { 'Content-Type': 'application/json' },
+    },
+  )
 }
