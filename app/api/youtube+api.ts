@@ -6,28 +6,14 @@ export async function GET(request: Request) {
     headless: true,
   })
   const page = await browser.newPage()
-  await page.goto('https://developer.chrome.com/')
-  await page.setViewport({ height: 1024, width: 1080 })
+  await page.goto('https://www.youtube.com/')
 
-  // Type into search box
-  await page.type('.devsite-search-field', 'automate beyond recorder')
-
-  // Wait and click on first result
-  const searchResultSelector = '.devsite-result-item-link'
-  await page.waitForSelector(searchResultSelector)
-  await page.click(searchResultSelector)
-
-  // Locate the full title with a unique string
-  const textSelector = await page.waitForSelector('text/Customize and automate')
-  const fullTitle = await textSelector?.evaluate((el) => el.textContent)
-
-  // Close the browser
-  await browser.close()
-
-  return new Response(
-    JSON.stringify({ title: `The title of this blog post is ${fullTitle}` }),
-    {
-      headers: { 'Content-Type': 'application/json' },
-    },
+  const subtitleElement = await page.waitForSelector('#subtitle-container')
+  const subtitle = await subtitleElement?.evaluate((el) =>
+    el.textContent?.trim(),
   )
+
+  return new Response(JSON.stringify({ subtitle }), {
+    headers: { 'Content-Type': 'application/json' },
+  })
 }
