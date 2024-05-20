@@ -14,12 +14,9 @@ export async function GET(request: Request) {
   page.setDefaultNavigationTimeout(10000)
   await page.goto('https://www.youtube.com/')
 
-  const searchResultSelector = 'a[aria-label="Sign in"'
-  await page.waitForSelector(searchResultSelector)
-  await page.click(searchResultSelector)
-  await page.waitForSelector('input[type="email"]')
-  await page.type('input[type="email"]', username)
-  await page.click('#identifierNext')
+  await page.locator('a[aria-label="Sign in"').click()
+  await page.locator('input[type="email"]').fill(username)
+  await page.locator('#identifierNext').click()
 
   // Wait for potential "Choose an account" case
   try {
