@@ -13,6 +13,7 @@ export default async function youtubeFeed({ page }: { page: Page }) {
   const filteredLinks = links.filter((link) =>
     link.startsWith('https://www.youtube.com/watch?v='),
   )
+  const uniqueLinks = Array.from(new Set(filteredLinks))
 
-  return filteredLinks
+  return uniqueLinks
 }
