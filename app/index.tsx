@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonText,
   Heading,
   Link,
   LinkText,
@@ -28,8 +29,8 @@ export default function Page() {
         style={{ height: 115, width: 115 }}
       />
       <Heading marginBottom={16}>YouTube feed</Heading>
-      <Button color="white" marginBottom={16} onPress={getYouTubeFeed}>
-        Fetch feed
+      <Button marginBottom={16} onPress={getYouTubeFeed}>
+        <ButtonText>Fetch feed</ButtonText>
       </Button>
       {loading === undefined ? null : loading ? (
         <Text>Loading...</Text>

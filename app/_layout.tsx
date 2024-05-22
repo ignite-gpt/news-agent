@@ -4,6 +4,8 @@ import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
 
+// Note: You can switch to `import { config } from '@gluestack-ui/config'` to
+// use the default Gluestack theme
 import { config } from '../src/components/gluestack-ui.config'
 
 // Catch errors thrown by the Layout component
