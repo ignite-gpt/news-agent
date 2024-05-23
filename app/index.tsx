@@ -22,12 +22,25 @@ export default function Page() {
     setLoading(false)
   }
 
+  async function syncCredentials() {
+    setLoading(true)
+    await fetch('/api/credentials', {
+      body: JSON.stringify({
+        password: 'your-password',
+        username: 'your-username',
+      }),
+      method: 'POST',
+    })
+    setLoading(false)
+  }
+
   return (
     <Box alignItems="center" flex={1} marginTop={36}>
       <Image
         source="https://avatars.githubusercontent.com/u/133729730"
         style={{ height: 115, width: 115 }}
       />
+
       <Heading marginBottom={16}>YouTube feed</Heading>
       <Button marginBottom={16} onPress={getYouTubeFeed}>
         <ButtonText>Fetch feed</ButtonText>
@@ -43,13 +56,10 @@ export default function Page() {
           </Box>
         ))
       )}
-      {/* <Box>
-        <Text>
-          <Link href="https://reactnative.dev/" isExternal>
-            <LinkText>React Native docs</LinkText>
-          </Link>
-        </Text>
-      </Box> */}
+
+      <Button marginTop={16} onPress={() => syncCredentials()}>
+        <ButtonText>Sync credentials</ButtonText>
+      </Button>
     </Box>
   )
 }
